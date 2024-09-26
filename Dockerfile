@@ -1,15 +1,15 @@
-# Use a imagem oficial do PHP 8.2 com Apache
+# Official image of PHP 8.2
 FROM php:8.2-apache
 
 ####################################
 # ENV Config
 
-# Configure o nome do seu projeto para acessá-lo. Por exemplo: http://localhost/meusite-teste
-ENV PROJECT_NAME meusite-teste
+# The name of your project: http://localhost/mywebsite-test
+ENV PROJECT_NAME mywebsite-test
 
 ####################################
 
-# Instale as extensões PHP necessárias e outras dependências
+# Dependencies of PHP and other
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -33,10 +33,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable gnupg \
     && a2enmod rewrite
 
-# Instale o SOAP
+# Installing SOAP
 RUN docker-php-ext-install soap && docker-php-ext-enable soap
 
-# Instale o OCI8 (Oracle)
+# Installing the OCI8 (For Oracle Databases)
 RUN apt-get update && \
     apt-get install -y libaio1 libaio-dev unzip && \
     apt-get clean
@@ -65,40 +65,37 @@ RUN docker-php-source extract && \
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Instalar o Teradata ODBC Driver
+# Installing Terada ODBC driver for Teradata databases
 COPY .docker/tdodbc2000__linux_x8664.20.00.00.10-1.tar.gz /tmp/
 RUN cd /tmp && \
     tar -xvzf tdodbc2000__linux_x8664.20.00.00.10-1.tar.gz && \
     alien -i tdodbc2000/tdodbc2000-20.00.00.10-1.x86_64.rpm
 
-# Configurar o ODBC
 COPY .docker/odbc.ini /etc/odbc.ini
 COPY .docker/odbcinst.ini /etc/odbcinst.ini
 
-# Instale o Composer globalmente
+# Installing Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Defina o diretório de trabalho
+# Workspace 
 WORKDIR /var/www/html/${PROJECT_NAME}
-
-# Copie os arquivos do Laravel para o container
 COPY . /var/www/html/${PROJECT_NAME}
 
-# Dê permissões apropriadas às pastas de armazenamento e cache do Laravel
+# All the necessary permissions
 RUN chown -R www-data:www-data /var/www/html/${PROJECT_NAME}/storage /var/www/html/${PROJECT_NAME}/bootstrap/cache
 RUN chmod -R 775 /var/www/html/${PROJECT_NAME}/storage /var/www/html/${PROJECT_NAME}/bootstrap/cache
 
-# Remova o diretório vendor para garantir um ambiente limpo
+# Remove the vendor's dir to get a clean and fast upload on your container
 RUN rm -rf /var/www/html/${PROJECT_NAME}/vendor
 
-# Verifique as dependências de plataforma do Composer
+# Composer dependencies
 RUN composer check-platform-reqs
 
-# Instale as dependências do Laravel
+# Laravel dependencies
 RUN composer install --no-cache --optimize-autoloader --no-dev --verbose
 
-# Copie o arquivo de configuração do Apache
+# Apache configuration
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
-# Exponha a porta 80 para o Apache
+# Expose port 80
 EXPOSE 80
