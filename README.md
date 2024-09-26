@@ -71,4 +71,13 @@ Before we start you will need this:
    ```bash
    docker-compose up -d
 
+8. Okay then, we need to install our packages into the container, use the following command to access the bash of your container:
+   
+   ```bash
+   docker-compose exec laravel bash # Note: You can check the name of the "server" using the command 'docker-compose ps'
+
+   And then use:
+
+   composer install
+   
 Now you should be able to access your project and see the Laravel's home page without any problems in http://localhost:8084/[PROJECT_NAME]
