@@ -5,9 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: yourname/PROJECT_NAME:latest # Altere
-    container_name: PROJECT_NAME_CONTAINER # Altere
+    image: yourname/PROJECT_NAME:latest # Change
+    container_name: PROJECT_NAME_CONTAINER # Change
     ports:
       - "8084:80"
     volumes:
-      - .:/var/www/html/PROJECT_NAME # Altere
+      - .:/var/www/html/PROJECT_NAME # Change
