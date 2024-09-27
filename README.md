@@ -84,6 +84,9 @@ Before we start you will need this:
  
 Now you should be able to access your project and see the Laravel's home page without any problems in http://localhost:8084/
 
+![image](https://github.com/user-attachments/assets/94d5a9bc-fa16-42b2-a64e-6798fbf059c5)
+
+
 Note: You can change the port in 'docker-compose.yml':
 
    ```bash
