@@ -76,10 +76,12 @@ Before we start you will need this:
    ```bash
    docker-compose exec laravel bash # Note: You can check the name of the "service" using the command 'docker-compose ps'
 
-   And then use:
 
-   composer install # This isn't necessary exactly, we have this in Dockerfile but use this command just to be sure!
+9. This isn't necessary exactly, we have this in Dockerfile but use this command just to be sure!
    
+   ```bash
+   composer install 
+ 
 Now you should be able to access your project and see the Laravel's home page without any problems in http://localhost:8084/
 
 Note: You can change the port in 'docker-compose.yml':
