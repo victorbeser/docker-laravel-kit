@@ -74,7 +74,7 @@ Before we start you will need this:
 8. Okay then, we need to install our packages into the container, use the following command to access the bash of your container:
    
    ```bash
-   docker-compose exec laravel bash # Note: You can check the name of the "server" using the command 'docker-compose ps'
+   docker-compose exec laravel bash # Note: You can check the name of the "service" using the command 'docker-compose ps'
 
    And then use:
 
