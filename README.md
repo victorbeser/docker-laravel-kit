@@ -8,7 +8,7 @@ Imagine a modern development environment widely adopted by large companies aroun
 With Docker and Laravel, I offer you an experience that goes beyond the conventional, with all installations pre-configured for you. 
 This means more agility, efficiency, and a focus on what truly matters: creating innovative solutions.
 
-## Tecnologias Utilizadas
+## Techs
 
 - **Laravel**: A PHP Framework for web development.
 - **Docker**: Containerization platform.
@@ -80,4 +80,11 @@ Before we start you will need this:
 
    composer install
    
-Now you should be able to access your project and see the Laravel's home page without any problems in http://localhost:8084/[PROJECT_NAME]
+Now you should be able to access your project and see the Laravel's home page without any problems in http://localhost:8084/
+
+Note: You can change the port in 'docker-compose.yml':
+
+   ```bash
+   docker-compose.yml
+   ports:
+      - "8084:80" # Change here the 8084 port
