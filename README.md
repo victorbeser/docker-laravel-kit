@@ -44,7 +44,7 @@ Before we start you will need this:
      - docker-compose.yml
      - Dockerfile
 
-4. Rename the (dot)docker folder to .docker;
+4. Rename the (dot)docker folder to .docker and the (dot)dockerignore to .dockerignore;
 5. Now we need to change some files to work correctly:
    
    ```bash
