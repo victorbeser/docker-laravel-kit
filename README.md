@@ -78,7 +78,7 @@ Before we start you will need this:
 
    And then use:
 
-   composer install
+   composer install # This isn't necessary exactly, we have this in Dockerfile but use this command just to be sure!
    
 Now you should be able to access your project and see the Laravel's home page without any problems in http://localhost:8084/
 
