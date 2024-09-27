@@ -32,9 +32,9 @@ Before we start you will need this:
 2. Get this repo as a clone into your system:
 
    ```bash
-   git clone https://github.com/victorbeser/docker-laravel-modern-development.git
+   git clone https://github.com/victorbeser/docker-laravel-kit.git
 
-3. Copy and paste all the files of 'docker-laravel-modern-development' folder to 'your-project-name' project Laravel folder;
+3. Copy and paste all the files of 'docker-laravel-kit' folder to 'your-project-name' project Laravel folder;
    
    ```bash
    It should be like this:
@@ -93,3 +93,6 @@ Note: You can change the port in 'docker-compose.yml':
    docker-compose.yml
    ports:
       - "8084:80" # Change here the 8084 port
+   ```
+
+Now that you got your Back-End web application working very well try creating your Front-End web application with React JS & Docker <a href="https://github.com/victorbeser/docker-reactjs-kit">clicking here</a>!
