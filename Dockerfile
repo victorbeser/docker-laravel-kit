@@ -26,7 +26,11 @@ RUN apt-get update && apt-get install -y \
     odbc-postgresql \
     libodbc1 \
     alien \
+    dpkg-dev \
+    unixodbc \
+    unixodbc-dev \
     libgpgme-dev \
+    tdsodbc \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo_mysql mbstring xml zip pdo_pgsql \
     && pecl install gnupg \
@@ -65,14 +69,21 @@ RUN docker-php-source extract && \
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Installing Terada ODBC driver for Teradata databases
-COPY .docker/tdodbc2000__linux_x8664.20.00.00.10-1.tar.gz /tmp/
-RUN cd /tmp && \
-    tar -xvzf tdodbc2000__linux_x8664.20.00.00.10-1.tar.gz && \
-    alien -i tdodbc2000/tdodbc2000-20.00.00.10-1.x86_64.rpm
+# ODBC Teradata Config
+COPY .docker/tdodbc1720__linux_x8664.17.20.00.36-1.tar.gz /tmp/
+RUN tar -xzf /tmp/tdodbc1720__linux_x8664.17.20.00.36-1.tar.gz -C /tmp/
+RUN alien -k /tmp/tdodbc1720/tdodbc1720-17.20.00.36-1.x86_64.rpm
+RUN dpkg -i /var/www/html/tdodbc1720_17.20.00.36-1_amd64.deb
+RUN rm -rf /tmp/tdodbc1720__linux_x8664.17.20.00.36-1.tar.gz
 
+# ODBC Config
 COPY .docker/odbc.ini /etc/odbc.ini
 COPY .docker/odbcinst.ini /etc/odbcinst.ini
+ENV LD_LIBRARY_PATH=/opt/teradata/client/17.20/lib64:$LD_LIBRARY_PATH
+RUN docker-php-ext-configure pdo_odbc --with-pdo-odbc=unixODBC,/usr \
+    && docker-php-ext-install pdo_odbc
+
+COPY .docker/php.ini-development /usr/local/etc/php/php.ini
 
 # Installing Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
